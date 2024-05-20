@@ -11,6 +11,7 @@ public class EpcVersion
 
     public static readonly EpcVersion V1 = new("001");
     public static readonly EpcVersion V2 = new("002");
+    public static readonly EpcVersion V3 = new("003");
 
     public override string ToString()
     {

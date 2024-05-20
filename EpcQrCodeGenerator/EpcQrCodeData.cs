@@ -91,6 +91,8 @@ public class EpcQrCodeData
     /// </summary>
     public string BeneficiaryToOriginatorInformation { get; set; } = null;
 
+    public string Currency { get; set; }
+
 
     /// <summary>
     /// Converts the current EPC QR-Code Data object into a valid string payload that can be used with any generator to create a valid EPC QR-Code.
@@ -118,7 +120,7 @@ public class EpcQrCodeData
         res += BeneficiaryBic + lf;
         res += BeneficiaryName + lf;
         res += BeneficiaryIban + lf;
-        res += "EUR" + CreditAmount.ToString("0.00", CultureInfo.InvariantCulture) + lf;
+        res += Currency + CreditAmount.ToString("0.00", CultureInfo.InvariantCulture) + lf;
         res += PurposeOfCreditTransfer + lf;
         res += RemittanceInformationStructured + lf;
         res += RemittanceInformationUnstructured + lf;
@@ -141,7 +143,7 @@ public class EpcQrCodeData
 
         if (CharacterSet is default(EpcEncoding)) throw new InvalidDataException("CharacterSet is mandatory.");
 
-        if (IdentificationCode != "SCT") throw new InvalidDataException("IdentificationCode cannot have a value different than \"SCT\".");
+        if (IdentificationCode != "SCT" && IdentificationCode != "INST") throw new InvalidDataException("IdentificationCode cannot have a value different than \"SCT\".");
 
         var beneficiaryBicIsNullOrEmpty = string.IsNullOrWhiteSpace(BeneficiaryBic);
         if (beneficiaryBicIsNullOrEmpty && Version == EpcVersion.V1) throw new InvalidDataException("BeneficiaryBic is mandatory when using Version 1.");
